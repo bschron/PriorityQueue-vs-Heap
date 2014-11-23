@@ -22,7 +22,7 @@ Hp* createEmptyHp (void);
 /*sets all pointer values to NULL and priority values to -1, and length to 0*/
 void initializeHp (Hp *hp);
 /*enqueues event on the Hp and calls hpfy, but if it already exists, will increase it's priority instead and calls hpdy*/
-Hp* enqueueHp (Hp *hp, void *item);
+Hp* enqueueHp (Hp *hp, void *object, int priority);
 /*requires a pointer to the hp and the positon of the root or sub-root from wich will start the function*/
 void hpfyHp (Hp *hp, int parent);
 /*given two searching hp positions and a pointer to the hp, will switch the positions of the value and priorities of each item*/

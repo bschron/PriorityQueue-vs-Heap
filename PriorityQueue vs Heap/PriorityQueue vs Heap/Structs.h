@@ -17,8 +17,8 @@ typedef struct priorityQueueCapsule PQC;
 
 struct hp
 {
-    void *hp[SearchHpSize];
-    int priority[SearchHpSize];
+    void *hp[HpSize];
+    int priority[HpSize];
     int hpLength;
 };
 

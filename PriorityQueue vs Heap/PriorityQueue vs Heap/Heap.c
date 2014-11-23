@@ -59,7 +59,7 @@ int peekHpHighestPriority (Hp *hp)
 
 void hpfyHp (Hp *hp, int parent)
 {
-    if (parent < 0 || hp == NULL || parent > SearchHpSize-1)
+    if (parent < 0 || hp == NULL || parent > HpSize-1)
     {
         return;
     }
@@ -79,17 +79,18 @@ void hpfyHp (Hp *hp, int parent)
     
     int leftChild = hpLeftChild(parent);
     int rightChild = hpRightChild(parent);
-    if (hp->hp[leftChild] == NULL || leftChild >= SearchHpSize)
+    //flagging child as invalid.
+    if (hp->hp[leftChild] == NULL || leftChild >= HpSize)
     {
         leftChild = -1;
     }
-    if (hp->hp[rightChild] == NULL || rightChild >= SearchHpSize)
+    if (hp->hp[rightChild] == NULL || rightChild >= HpSize)
     {
         rightChild = -1;
     }
     int biggestChild = maxHpChild(hp, leftChild, rightChild);
     
-    if (hp->hp[biggestChild] != NULL && hp->priority[parent] < hp->priority[biggestChild])
+    if (hp->hp[biggestChild] != NULL && hp->priority[parent] < hp->priority[biggestChild] && hp->priority[biggestChild] != -1)
     {
         switchHpItems(hp, parent, biggestChild);
         hpfyHp(hp, biggestChild);
@@ -102,43 +103,34 @@ void hpfyHp (Hp *hp, int parent)
 void switchHpItems (Hp *hp, int item1, int item2)
 {
     int transitionInt;
-    void *transitionvoid;
+    void *transitionObject;
     
-    transitionvoid = hp->hp[item1];
+    transitionObject = hp->hp[item1];
     transitionInt = hp->priority[item1];
     
     hp->hp[item1] = hp->hp[item2];
     hp->priority[item1] = hp->priority[item2];
     
-    hp->hp[item2] = transitionvoid;
+    hp->hp[item2] = transitionObject;
     hp->priority[item2] = transitionInt;
 }
 
-Hp* enqueueHp (Hp *hp, void *item)
+Hp* enqueueHp (Hp *hp, void *object, int priority)
 {
-    if (item == NULL)
+    if (object == NULL)
     {
         return hp;
     }
     else if (hp == NULL)
     {
-        return enqueueHp(createEmptyHp(), item);
+        return enqueueHp(createEmptyHp(), object, priority);
     }
     
-    int i;
-    
-    for (i = 0; i<SearchHpSize && item != hp->hp[i] && hp->hp[i] != NULL; i++);
-    
-    if (item == hp->hp[i])
+    if (hp->hpLength < HpSize)
     {
-        (hp->priority[i])++;
-        hpfyHp(hp, i);
-    }
-    else if (hp->hpLength < SearchHpSize)
-    {
-        hp->hp[i] = item;
-        hp->priority[i] = 1;
-        hpfyHp(hp, i);
+        hp->hp[hp->hpLength] = object;
+        hp->priority[hp->hpLength] = priority;
+        hpfyHp(hp, hp->hpLength);
         (hp->hpLength)++;
     }
     
@@ -150,7 +142,7 @@ void initializeHp (Hp *hp)
 {
     int i;
     
-    for (i=0; i<SearchHpSize; i++)
+    for (i=0; i<HpSize; i++)
     {
         hp->hp[i] = NULL;
         hp->priority[i] = -1;
