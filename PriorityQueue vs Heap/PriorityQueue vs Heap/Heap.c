@@ -34,16 +34,16 @@ int hpRightChild (int parent)
     return (parent*2) +2;
 }
 
-SearchingHp* createEmptyHp (void)
+Hp* createEmptyHp (void)
 {
-    SearchingHp *new = (SearchingHp*) malloc(sizeof(SearchingHp));
+    Hp *new = (Hp*) malloc(sizeof(Hp));
     
-    initializeSearchingHp(new);
+    initializeHp(new);
     
     return new;
 }
 
-int peekHpHighestPriority (SearchingHp *hp)
+int peekHpHighestPriority (Hp *hp)
 {
     if (hp == NULL)
     {
@@ -57,7 +57,7 @@ int peekHpHighestPriority (SearchingHp *hp)
     return hp->priority[0];
 }
 
-void hpfySearchingHp (SearchingHp *hp, int parent)
+void hpfyHp (Hp *hp, int parent)
 {
     if (parent < 0 || hp == NULL || parent > SearchHpSize-1)
     {
@@ -73,7 +73,7 @@ void hpfySearchingHp (SearchingHp *hp, int parent)
         
         if (hp->priority[parent] > hp->priority[parentParent])
         {
-            hpfySearchingHp(hp, parentParent);
+            hpfyHp(hp, parentParent);
         }
     }
     
@@ -87,34 +87,34 @@ void hpfySearchingHp (SearchingHp *hp, int parent)
     {
         rightChild = -1;
     }
-    int biggestChild = maxSearchingHpChild(hp, leftChild, rightChild);
+    int biggestChild = maxHpChild(hp, leftChild, rightChild);
     
     if (hp->hp[biggestChild] != NULL && hp->priority[parent] < hp->priority[biggestChild])
     {
-        switchSearchingHpItems(hp, parent, biggestChild);
-        hpfySearchingHp(hp, biggestChild);
-        hpfySearchingHp(hp, parent);
+        switchHpItems(hp, parent, biggestChild);
+        hpfyHp(hp, biggestChild);
+        hpfyHp(hp, parent);
     }
     
     return;
 }
 
-void switchSearchingHpItems (SearchingHp *hp, int item1, int item2)
+void switchHpItems (Hp *hp, int item1, int item2)
 {
     int transitionInt;
-    Event *transitionEvent;
+    void *transitionvoid;
     
-    transitionEvent = hp->hp[item1];
+    transitionvoid = hp->hp[item1];
     transitionInt = hp->priority[item1];
     
     hp->hp[item1] = hp->hp[item2];
     hp->priority[item1] = hp->priority[item2];
     
-    hp->hp[item2] = transitionEvent;
+    hp->hp[item2] = transitionvoid;
     hp->priority[item2] = transitionInt;
 }
 
-SearchingHp* enqueueSearchingHp (SearchingHp *hp, Event *item)
+Hp* enqueueHp (Hp *hp, void *item)
 {
     if (item == NULL)
     {
@@ -122,7 +122,7 @@ SearchingHp* enqueueSearchingHp (SearchingHp *hp, Event *item)
     }
     else if (hp == NULL)
     {
-        return enqueueSearchingHp(createEmptyHp(), item);
+        return enqueueHp(createEmptyHp(), item);
     }
     
     int i;
@@ -132,20 +132,20 @@ SearchingHp* enqueueSearchingHp (SearchingHp *hp, Event *item)
     if (item == hp->hp[i])
     {
         (hp->priority[i])++;
-        hpfySearchingHp(hp, i);
+        hpfyHp(hp, i);
     }
     else if (hp->hpLength < SearchHpSize)
     {
         hp->hp[i] = item;
         hp->priority[i] = 1;
-        hpfySearchingHp(hp, i);
+        hpfyHp(hp, i);
         (hp->hpLength)++;
     }
     
     return hp;
 }
 
-void initializeSearchingHp (SearchingHp *hp)
+void initializeHp (Hp *hp)
 
 {
     int i;
@@ -159,7 +159,7 @@ void initializeSearchingHp (SearchingHp *hp)
     hp->hpLength = 0;
 }
 
-Event* dequeueSearchingHp (SearchingHp *hp)
+void* dequeueHp (Hp *hp)
 {
     if (hp == NULL)
     {
@@ -171,7 +171,7 @@ Event* dequeueSearchingHp (SearchingHp *hp)
     }
     
     //get first
-    Event *dequeued = hp->hp[0];
+    void *dequeued = hp->hp[0];
     
     //replace first with last
     hp->hp[0] = hp->hp[hp->hpLength-1];
@@ -183,13 +183,13 @@ Event* dequeueSearchingHp (SearchingHp *hp)
     (hp->hpLength)--;
     
     //hpfy
-    hpfySearchingHp(hp, 0);
+    hpfyHp(hp, 0);
     
     //return dequeued
     return dequeued;
 }
 
-int maxSearchingHpChild (SearchingHp *hp, int left, int right)
+int maxHpChild (Hp *hp, int left, int right)
 {
     if (hp->priority[left] > hp->priority[right])
     {
@@ -201,250 +201,14 @@ int maxSearchingHpChild (SearchingHp *hp, int left, int right)
     }
 }
 
-SearchingHp* searchTableElementsToSearchingHp (SearchingHp *hp, SearchTable *table, int hash)
-{
-    if (table == NULL)
-    {
-        return hp;
-    }
-    else if (hash < 0 || hash >= SearchTableSize)
-    {
-        return hp;
-    }
-    else if (table->table[hash] == NULL)
-    {
-        return hp;
-    }
-    else if (hp == NULL)
-    {
-        return searchTableElementsToSearchingHp(createEmptyHp(), table, hash);
-    }
-    
-    hp = eventBinarySearchTreeToSearchingHp(hp, table->table[hash]);
-    
-    return hp;
-}
-
-SearchingHp* eventBinarySearchTreeToSearchingHp (SearchingHp *hp, EventBinarySearchTree *root)
-{
-    if (root == NULL)
-    {
-        return hp;
-    }
-    else if (hp == NULL)
-    {
-        return NULL;
-    }
-    
-    hp = enqueueSearchingHp(hp, root->event);
-    hp = eventBinarySearchTreeToSearchingHp(hp, root->leftChild);
-    hp = eventBinarySearchTreeToSearchingHp(hp, root->rightChild);
-    
-    return hp;
-}
-
-SearchingHp* enqueueEventsWithSimilarWord (SearchingHp *hp, SearchTable *table, char *word)
-{
-    if (table == NULL || strcmp(word, "") == 0)
-    {
-        return hp;
-    }
-    else if (hp == NULL)
-    {
-        return enqueueEventsWithSimilarWord(createEmptyHp(), table, word);
-    }
-    
-    int hash = hashWord(word);
-    
-    return searchTableElementsToSearchingHp(hp, table, hash);
-}
-
-SearchingHp* enqueueEventsWithSimilarText (SearchingHp *hp, SearchTable *table, char *text)
-{
-    if (table == NULL || strcmp(text, "") == 0)
-    {
-        return hp;
-    }
-    else if (hp == NULL)
-    {
-        return enqueueEventsWithSimilarText(createEmptyHp(), table, text);
-    }
-    
-    Node *textWords = NULL;
-    textWords = listWords(text, textWords);
-    //there was some error
-    if (textWords == NULL)
-    {
-        return hp;
-    }
-    
-    Node word;
-    //enqueue events, word by word
-    for (word = popNode(&textWords); !emptyNode(&word); word = popNode(&textWords))
-    {
-        hp = enqueueEventsWithSimilarWord(hp, table, word.name);
-    }
-    
-    return hp;
-}
-
-SearchingHp* enqueueEventsWithProvidedDate (SearchingHp *hp, SearchTable *table, int day, int month, int year)
-{
-    if (table == NULL)
-    {
-        return hp;
-    }
-    else if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1)
-    {
-        return hp;
-    }
-    else if (hp == NULL)
-    {
-        return enqueueEventsWithProvidedDate(createEmptyHp(), table, day, month, year);
-    }
-    
-    char strDay[6], strMonth[6], strYear[Max];
-    
-    snprintf(strDay, sizeof(strDay)/sizeof(char)-1, "%d", day);
-    snprintf(strMonth, sizeof(strMonth)/sizeof(char)-1, "%d", month);
-    snprintf(strYear, sizeof(strYear)/sizeof(char)-1, "%d", year);
-    
-    TWC *provisory = NULL;
-    TWC *list = NULL;
-    TWC* current = NULL;
-    TWC *next = NULL;
-    
-    hp = searchTableElementsToSearchingHp(hp, table, hashWord(strDay));
-    hp = searchTableElementsToSearchingHp(hp, table, hashWord(strMonth));
-    hp = searchTableElementsToSearchingHp(hp, table, hashWord(strYear));
-    
-    while (hp->hpLength > 0)
-    {
-        Event *current = NULL;
-        if (peekHpHighestPriority(hp) >= 3)
-        {
-            current = dequeueSearchingHp(hp);
-        }
-        else
-        {
-            dequeueSearchingHp(hp);
-        }
-        
-        if (current != NULL)
-        {
-            provisory = insertTWC(provisory, createTWC(current));
-        }
-    }
-    
-    for (current = provisory; current != NULL; current = next)
-    {
-        next = current->next;
-        Event* popped = popObject(&provisory);
-        
-        if (popped->date->day == day && popped->date->month == month && popped->date->year == year)
-        {
-            list = insertTWC(list, createTWC(popped));
-        }
-    }
-    
-    while (list != NULL)
-    {
-        Event *current = popObject(&list);
-        hp = enqueueSearchingHp(hp, current);
-    }
-    
-    return hp;
-    
-    /*
-    SearchingHp *provisory = NULL;
-    SearchingHp *provisory2 = NULL;
-    Event *dequeued = NULL;
-    
-    char strDay[6], strMonth[6], strYear[Max];
-    
-    snprintf(strDay, sizeof(strDay)/sizeof(char)-1, "%d", day);
-    snprintf(strMonth, sizeof(strMonth)/sizeof(char)-1, "%d", month);
-    snprintf(strYear, sizeof(strYear)/sizeof(char)-1, "%d", year);
-    
-    provisory = searchTableElementsToSearchingHp(provisory, table, hashWord(strDay));
-    provisory = searchTableElementsToSearchingHp(provisory, table, hashWord(strMonth));
-    provisory = searchTableElementsToSearchingHp(provisory, table, hashWord(strYear));
-    //get only Events with at least 3 matchings
-    while (peekHpHighestPriority(provisory) >= 3)
-    {
-        dequeued = dequeueSearchingHp(provisory);
-        provisory2 = enqueueSearchingHp(provisory2, dequeued);
-    }
-    //clear provisory heap
-    for (dequeued = dequeueSearchingHp(provisory); dequeued != NULL; dequeued = dequeueSearchingHp(provisory));
-    //get only events with that exact date
-    for (dequeued = dequeueSearchingHp(provisory2); dequeued != NULL; dequeued = dequeueSearchingHp(provisory2))
-    {
-        if (dequeued->date->day == day && dequeued->date->month == month && dequeued->date->year == year)
-        {
-            hp = enqueueSearchingHp(hp, dequeued);
-        }
-    }
-    
-    free(provisory);
-    free(provisory2);
-    
-    return hp;
-    */
-}
-
-SearchingHp* enqueueEventsForThisWeek (SearchingHp *hp, Date *now)
-{
-    if (hp == NULL)
-    {
-        return enqueueEventsForThisWeek(createEmptyHp(), now);
-    }
-    else if (now == NULL)
-    {
-        return enqueueEventsForThisWeek(hp, getDate(NULL));
-    }
-    
-    int weekRemainingDays = remainingDaysInWeek(now);
-    int i;
-    
-    for (i=0; i<weekRemainingDays; i++, now=increaseDate(now))
-    {
-        hp = enqueueEventsWithProvidedDate(hp, dateSearchTable, now->day, now->month, now->year);
-    }
-    
-    return hp;
-}
-
-SearchingHp* enqueueEventsForThisMonth (SearchingHp *hp, Date *now)
-{
-    if (hp == NULL)
-    {
-        return enqueueEventsForThisMonth(createEmptyHp(), now);
-    }
-    else if (now == NULL)
-    {
-        return enqueueEventsForThisMonth(hp, getDate(NULL));
-    }
-    
-    int remainingDays = remainingDaysInMonth(now);
-    int i;
-    
-    for (i=0; i<=remainingDays; i++, now=increaseDate(now))
-    {
-        hp = enqueueEventsWithProvidedDate(hp, dateSearchTable, now->day, now->month, now->year);
-    }
-    
-    return hp;
-}
-
-SearchingHp* duplicateSearchingHp (SearchingHp *hp)
+Hp* duplicateHp (Hp *hp)
 {
     if (hp == NULL)
     {
         return NULL;
     }
     
-    SearchingHp *new = createEmptyHp();
+    Hp *new = createEmptyHp();
     
     int i;
     for (i = 0; i<hp->hpLength; i++)

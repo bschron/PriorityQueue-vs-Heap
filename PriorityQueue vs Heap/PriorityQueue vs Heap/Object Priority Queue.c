@@ -118,30 +118,6 @@ void* dequeuePriorityQueue (PriorityQueue *queue)
     return dequeued;
 }
 
-PriorityQueue* searchingHpToPriorityQueueOrderedByDate (PriorityQueue *queue, SearchingHp *hp)
-{
-    if (hp == NULL)
-    {
-        return queue;
-    }
-    else if (hp->hpLength <= 0)
-    {
-        return queue;
-    }
-    else if (queue == NULL)
-    {
-        return searchingHpToPriorityQueueOrderedByDate(createPriorityQueue(), hp);
-    }
-    
-    Event *object = dequeueSearchingHp(hp);
-    Date *now = getDate(NULL);
-    
-    queue = enqueuePriorityQueue(queue, NULL, object, daysBetweenDates(object->date, now));
-    
-    free(now);
-    return searchingHpToPriorityQueueOrderedByDate(queue, hp);
-}
-
 void freePriorityQueue (PriorityQueue **queue)
 {
     if (queue == NULL)
@@ -184,44 +160,4 @@ PriorityQueue* copyPriorityQueue (PriorityQueue *dest, PriorityQueue *source)
     }
     
     return dest;
-}
-
-PriorityQueue* enqueuePriorityQueueEventsForNextNDays (PriorityQueue *queue, Date *startingDate, int remainingDays)
-{
-    if (queue == NULL)
-    {
-        return enqueuePriorityQueueEventsForNextNDays(createPriorityQueue(), startingDate, remainingDays);
-    }
-    else if (startingDate == NULL)
-    {
-        return enqueuePriorityQueueEventsForNextNDays(queue, getDate(NULL), remainingDays);
-    }
-    else if (remainingDays <= 0)
-    {
-        free(startingDate);
-        return queue;
-    }
-
-    SearchingHp *hp = enqueueEventsWithProvidedDate(NULL, dateSearchTable, startingDate->day, startingDate->month, startingDate->year);
-    
-    queue = searchingHpToPriorityQueueOrderedByDate(queue, hp);
-    
-    free(hp);
-    
-    return enqueuePriorityQueueEventsForNextNDays(queue, increaseDate(startingDate), remainingDays-1);
-}
-
-PriorityQueue* enqueuePriorityQueueEventsForThisWeek (PriorityQueue *queue)
-{
-    if (queue == NULL)
-    {
-        return enqueuePriorityQueueEventsForThisWeek(createPriorityQueue());
-    }
-    
-    Date *now = getDate(NULL);
-    int weekday = dayOfWeek(NULL, now);
-    
-    queue = enqueuePriorityQueueEventsForNextNDays(queue, now, 8-weekday);
-    
-    return queue;
 }
