@@ -61,6 +61,8 @@ PriorityQueue* enqueuePriorityQueue (PriorityQueue *queue, PQC* capsule, void* o
     
     if (queue->length <= 0)
     {
+        priorityQueueEnqueueAccess++;
+        
         capsule->next = NULL;
         queue->first = capsule;
     }
@@ -91,6 +93,7 @@ PQC* insertInRightPosition (PQC *first, PQC* capsule)
         first->next = insertInRightPosition(first->next, capsule);
     }
     
+    priorityQueueEnqueueAccess++;
     
     return first;
 }
@@ -114,6 +117,8 @@ void* dequeuePriorityQueue (PriorityQueue *queue)
     (queue->length)--;
     
     free(dequeuedCapsule);
+    
+    priorityQueueDequeueAcess++;
     
     return dequeued;
 }

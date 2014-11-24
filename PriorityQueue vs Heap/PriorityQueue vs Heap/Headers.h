@@ -33,6 +33,9 @@
 
 #include "Structs.h"
 
+int hpHeapfyAcess, hpEnqueueAccess, hpDequeueAcess;
+int priorityQueueEnqueueAccess, priorityQueueDequeueAcess;
+
 #include "Heap.h"
 #include "Object Priority Queue.h"
 

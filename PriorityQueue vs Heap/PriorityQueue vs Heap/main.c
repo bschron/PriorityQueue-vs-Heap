@@ -10,6 +10,11 @@
 
 int main(int argc, const char * argv[])
 {
+    hpEnqueueAccess = 0;
+    hpDequeueAcess = 0;
+    priorityQueueEnqueueAccess = 0;
+    priorityQueueDequeueAcess = 0;
+    
     Hp *hp = NULL;
     int i;
     int value[Max];
