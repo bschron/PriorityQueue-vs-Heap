@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8620CA571A240B6600D89C64 /* Object List.c in Sources */ = {isa = PBXBuildFile; fileRef = 8620CA551A240B6600D89C64 /* Object List.c */; };
 		8645EF001A224CD4000F9D5F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 8645EEFF1A224CD4000F9D5F /* main.c */; };
 		86D339CA1A224D70009EB8B4 /* Heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 86D339C81A224D70009EB8B4 /* Heap.c */; };
 		86D339CD1A224DBB009EB8B4 /* Object Priority Queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 86D339CB1A224DBB009EB8B4 /* Object Priority Queue.c */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8620CA551A240B6600D89C64 /* Object List.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "Object List.c"; sourceTree = "<group>"; };
+		8620CA561A240B6600D89C64 /* Object List.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Object List.h"; sourceTree = "<group>"; };
 		8645EEFC1A224CD4000F9D5F /* PriorityQueue vs Heap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "PriorityQueue vs Heap"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8645EEFF1A224CD4000F9D5F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		86D339C81A224D70009EB8B4 /* Heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Heap.c; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 				86D339C91A224D70009EB8B4 /* Heap.h */,
 				86D339CB1A224DBB009EB8B4 /* Object Priority Queue.c */,
 				86D339CC1A224DBB009EB8B4 /* Object Priority Queue.h */,
+				8620CA551A240B6600D89C64 /* Object List.c */,
+				8620CA561A240B6600D89C64 /* Object List.h */,
 			);
 			path = "PriorityQueue vs Heap";
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86D339CD1A224DBB009EB8B4 /* Object Priority Queue.c in Sources */,
+				8620CA571A240B6600D89C64 /* Object List.c in Sources */,
 				8645EF001A224CD4000F9D5F /* main.c in Sources */,
 				86D339CA1A224D70009EB8B4 /* Heap.c in Sources */,
 			);

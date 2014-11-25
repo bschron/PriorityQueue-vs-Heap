@@ -14,6 +14,7 @@
 typedef struct hp Hp;
 typedef struct priorityQueue PriorityQueue;
 typedef struct priorityQueueCapsule PQC;
+typedef struct twoWayCapsule TWC;
 
 struct hp
 {
@@ -33,6 +34,13 @@ struct priorityQueueCapsule
     void *object;
     PQC *next;
     int priority;
+};
+
+struct twoWayCapsule
+{
+    void *object;
+    TWC *next;
+    TWC *previous;
 };
 
 #endif
