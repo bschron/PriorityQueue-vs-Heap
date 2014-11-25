@@ -10,32 +10,31 @@
 
 int main(int argc, const char * argv[])
 {
+    int dataLength = 100;
+    int i;
+    void *current = NULL;
+    void *currentPriority = NULL;
+    
+    Data *randomData = enlistRandomData(NULL, NULL, dataLength);
+    
     hpEnqueueAccess = 0;
     hpDequeueAcess = 0;
+    hpHeapfyAcess = 0;
     priorityQueueEnqueueAccess = 0;
     priorityQueueDequeueAcess = 0;
     
     Hp *hp = NULL;
-    int i;
-    int value[Max];
-    int priority[Max];
+    PriorityQueue *queue = NULL;
     
-    for (i = 0; i < Max; i++)
+    for (current = popObject(&randomData->table[0]), currentPriority = popObject(&randomData->table[1]); currentPriority != NULL && current != NULL; current = popObject(&randomData->table[0]), currentPriority = popObject(&randomData->table[1]))
     {
-        value[i] = i;
-        priority[i] = Max-i;
+        hp = enqueueHp(hp, current, *((int*)currentPriority));
+        queue = enqueuePriorityQueue(queue, NULL, current, *((int*)currentPriority));
     }
     
-    for (i = 0; i < Max; i++)
-    {
-        hp = enqueueHp(hp, &value[i], priority[i]);
-    }
+    for (current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue); current != NULL && currentPriority != NULL; current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue));
     
-    for (i = 0; i < Max && hp->hpLength > 0; i++)
-    {
-        int *integer = dequeueHp(hp);
-        printf("%d\n", *integer);
-    }
+    printf("heapEnqueueAccess = %d heapDequeueAcess = %d heapHeapfyAcess = %d\n queueEnqueueAcess = %d priorityQueueDequeueAcess = %d\n", hpEnqueueAccess, hpDequeueAcess, hpHeapfyAcess, priorityQueueEnqueueAccess, priorityQueueDequeueAcess);
     
     return 0;
 }
