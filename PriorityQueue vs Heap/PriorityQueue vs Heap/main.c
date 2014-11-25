@@ -10,7 +10,7 @@
 
 int main(int argc, const char * argv[])
 {
-    int dataLength = 100;
+    int dataLength = 666;
     int i;
     void *current = NULL;
     void *currentPriority = NULL;

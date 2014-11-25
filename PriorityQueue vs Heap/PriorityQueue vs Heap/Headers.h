@@ -13,7 +13,7 @@
 #define description 300
 #define SearchTableSize 661
 #define not_in_use -1
-#define HpSize 600
+#define HpSize 1000000
 #define MainDir "/Documents/spyridonsCalendar"
 #define MainCalendar "calendar"
 #define CalendarFileExtension ".spyridon"
@@ -35,10 +35,21 @@
 
 int hpHeapfyAcess, hpEnqueueAccess, hpDequeueAcess;
 int priorityQueueEnqueueAccess, priorityQueueDequeueAcess;
+int _10hpHeapfyAcess, _10hpEnqueueAccess, _10hpDequeueAcess;
+int _10priorityQueueEnqueueAccess, _10priorityQueueDequeueAcess;
+int _100hpHeapfyAcess, _100hpEnqueueAccess, _100hpDequeueAcess;
+int _100priorityQueueEnqueueAccess, _100priorityQueueDequeueAcess;
+int _1000hpHeapfyAcess, _1000hpEnqueueAccess, _1000hpDequeueAcess;
+int _1000priorityQueueEnqueueAccess, _1000priorityQueueDequeueAcess;
+int _10000hpHeapfyAcess, _10000hpEnqueueAccess, _10000hpDequeueAcess;
+int _10000priorityQueueEnqueueAccess, _10000priorityQueueDequeueAcess;
+int _100000hpHeapfyAcess, _100000hpEnqueueAccess, _100000hpDequeueAcess;
+int _100000priorityQueueEnqueueAccess, _100000priorityQueueDequeueAcess;
 
 #include "Heap.h"
 #include "Object Priority Queue.h"
 #include "Object List.h"
 #include "Suport Functions.h"
+#include "Exporting Module.h"
 
 #endif
