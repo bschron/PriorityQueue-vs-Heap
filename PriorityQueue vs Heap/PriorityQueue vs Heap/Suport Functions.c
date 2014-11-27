@@ -52,3 +52,35 @@ Data* enlistRandomData (Data* data, int *seed, int dataLength)
     
     return enlistRandomData(data, seed, dataLength-1);
 }
+
+int max (int one, int two)
+{
+    int maximum;
+    
+    if (one > two)
+    {
+        maximum = one;
+    }
+    else
+    {
+        maximum = two;
+    }
+    
+    return maximum;
+}
+
+int min (int one, int two)
+{
+    int minimum;
+    
+    if (one < two)
+    {
+        minimum = one;
+    }
+    else
+    {
+        minimum = two;
+    }
+    
+    return minimum;
+}

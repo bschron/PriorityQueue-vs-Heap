@@ -33,18 +33,10 @@
 
 #include "Structs.h"
 
-int hpHeapfyAcess, hpEnqueueAccess, hpDequeueAcess;
-int priorityQueueEnqueueAccess, priorityQueueDequeueAcess;
-int _10hpHeapfyAcess, _10hpEnqueueAccess, _10hpDequeueAcess;
-int _10priorityQueueEnqueueAccess, _10priorityQueueDequeueAcess;
-int _100hpHeapfyAcess, _100hpEnqueueAccess, _100hpDequeueAcess;
-int _100priorityQueueEnqueueAccess, _100priorityQueueDequeueAcess;
-int _1000hpHeapfyAcess, _1000hpEnqueueAccess, _1000hpDequeueAcess;
-int _1000priorityQueueEnqueueAccess, _1000priorityQueueDequeueAcess;
-int _10000hpHeapfyAcess, _10000hpEnqueueAccess, _10000hpDequeueAcess;
-int _10000priorityQueueEnqueueAccess, _10000priorityQueueDequeueAcess;
-int _100000hpHeapfyAcess, _100000hpEnqueueAccess, _100000hpDequeueAcess;
-int _100000priorityQueueEnqueueAccess, _100000priorityQueueDequeueAcess;
+long long int hpHeapfyAcess, hpEnqueueAccess, hpDequeueAcess;
+long long int priorityQueueEnqueueAccess, priorityQueueDequeueAcess;
+long long int _individualHpHeapfyAcess[5], _individualHpEnqueueAccess[5], _individualHpDequeueAcess[5];
+long long int _individualPriorityQueueEnqueueAccess[5], _individualPriorityQueueDequeueAcess[5];
 
 #include "Heap.h"
 #include "Object Priority Queue.h"

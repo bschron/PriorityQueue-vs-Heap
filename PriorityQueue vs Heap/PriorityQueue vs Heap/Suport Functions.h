@@ -12,5 +12,7 @@
 #include "Headers.h"
 
 Data* enlistRandomData (Data* data, int *seed, int dataLength);
+int min (int one, int two);
+int max (int one, int two);
 
 #endif /* defined(__PriorityQueue_vs_Heap__Suport_Functions__) */

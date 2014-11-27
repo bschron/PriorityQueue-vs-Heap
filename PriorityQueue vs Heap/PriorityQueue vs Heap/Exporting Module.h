@@ -11,4 +11,6 @@
 
 #include "Headers.h"
 
+void export (void);
+
 #endif /* defined(__PriorityQueue_vs_Heap__Exporting_Module__) */

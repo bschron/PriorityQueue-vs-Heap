@@ -22,7 +22,7 @@ int main(int argc, const char * argv[])
     hpHeapfyAcess = 0;
     priorityQueueEnqueueAccess = 0;
     priorityQueueDequeueAcess = 0;
-    
+    /*
     Hp *hp = NULL;
     PriorityQueue *queue = NULL;
     
@@ -33,8 +33,42 @@ int main(int argc, const char * argv[])
     }
     
     for (current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue); current != NULL && currentPriority != NULL; current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue));
+    */
+    for (dataLength = 10, i = 0; dataLength <= 100000 && i<5; dataLength *= 10, hpEnqueueAccess = 0, hpDequeueAcess = 0, priorityQueueEnqueueAccess = 0, priorityQueueDequeueAcess = 0, hpHeapfyAcess = 0, i++)
+    {
+        Data *randomData = enlistRandomData(NULL, NULL, dataLength);
+        
+        hpEnqueueAccess = 0;
+        hpDequeueAcess = 0;
+        hpHeapfyAcess = 0;
+        priorityQueueEnqueueAccess = 0;
+        priorityQueueDequeueAcess = 0;
+        
+        Hp *hp = NULL;
+        PriorityQueue *queue = NULL;
+        
+        for (current = popObject(&randomData->table[0]), currentPriority = popObject(&randomData->table[1]); currentPriority != NULL && current != NULL; current = popObject(&randomData->table[0]), currentPriority = popObject(&randomData->table[1]))
+        {
+            hp = enqueueHp(hp, current, *((int*)currentPriority));
+            queue = enqueuePriorityQueue(queue, NULL, current, *((int*)currentPriority));
+        }
+        
+        for (current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue); current != NULL && currentPriority != NULL; current = dequeueHp(hp), currentPriority = dequeuePriorityQueue(queue));
+        
+        free(hp);
+        hp = NULL;
+        freePriorityQueue(&queue);
+        
+        _individualHpDequeueAcess[i] = hpDequeueAcess;
+        _individualHpEnqueueAccess[i] = hpEnqueueAccess;
+        _individualHpHeapfyAcess[i] = hpHeapfyAcess;
+        _individualPriorityQueueDequeueAcess[i] = priorityQueueDequeueAcess;
+        _individualPriorityQueueEnqueueAccess[i] = priorityQueueEnqueueAccess;
+    }
     
-    printf("heapEnqueueAccess = %d heapDequeueAcess = %d heapHeapfyAcess = %d\n queueEnqueueAcess = %d priorityQueueDequeueAcess = %d\n", hpEnqueueAccess, hpDequeueAcess, hpHeapfyAcess, priorityQueueEnqueueAccess, priorityQueueDequeueAcess);
+    //printf("heapEnqueueAccess = %d heapDequeueAcess = %d heapHeapfyAcess = %d\n queueEnqueueAcess = %d priorityQueueDequeueAcess = %d\n", hpEnqueueAccess, hpDequeueAcess, hpHeapfyAcess, priorityQueueEnqueueAccess, priorityQueueDequeueAcess);
+    
+    export();
     
     return 0;
 }
