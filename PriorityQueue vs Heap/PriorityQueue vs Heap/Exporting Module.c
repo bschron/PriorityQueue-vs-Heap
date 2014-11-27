@@ -101,5 +101,15 @@ void export (void)
     
     fprintf(file, "%s\n", dequeueGraph);
     
+    //heapfy graph
+    char heapfyPlot[Max];
+    sprintf(heapfyPlot, "plot(heapfy,type%co%c,col=%cgreen%c,ylim=inRange,ann=FALSE,axes=FALSE);", 34, 34, 34, 34);
+    char heapfyTitle[Max*3];
+    sprintf(heapfyTitle, "title(main=%cHeapfy%c,col.main=%cblack%c,font.main=4);title(xlab=%cnumber of objects%c,col.lab=rgb(0,0.5,0));title(ylab=%cnumber of processes%c,col.lab=rgb(0,0.5,0));", 34, 34, 34, 34, 34, 34, 34, 34);
+    char heapfyAxis[Max];
+    sprintf(heapfyAxis, "axis(1,at=1:5,lab=xAxis);axis(2,las=1,at=heapfyRange);");
+    char heapfyGraph[Max*10];
+    sprintf(heapfyGraph, "%s%s%sbox()", heapfyPlot, heapfyTitle, heapfyAxis);
+    
     fclose(file);
 }
