@@ -81,9 +81,9 @@ void export (void)
     char enqueueLegend[Max];
     sprintf(enqueueLegend, "legend(1,inRange[2],c(%cheap%c,%cqueue%c),cex=0.8,col=c(%cblue%c,%cred%c),pch=21:22,lty=1:2);", 34, 34, 34, 34, 34, 34, 34, 34);
     char enqueueGraph[Max*20*(sizeof(objects)/sizeof(char))];
-    sprintf(enqueueGraph, "%s%s%s%s%s%sbox();\n", objects, enqueuePlot, enqueueTitle, enqueueLines, enqueueAxis, enqueueLegend);
+    sprintf(enqueueGraph, "%s%s%s%s%s%sbox();", objects, enqueuePlot, enqueueTitle, enqueueLines, enqueueAxis, enqueueLegend);
     
-    fprintf(file, "%s", enqueueGraph);
+    fprintf(file, "%s\n", enqueueGraph);
     
     fclose(file);
 }
