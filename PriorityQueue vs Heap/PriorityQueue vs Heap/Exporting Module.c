@@ -85,5 +85,21 @@ void export (void)
     
     fprintf(file, "%s\n", enqueueGraph);
     
+    //dequeue graph
+    char dequeuePlot[Max];
+    sprintf(dequeuePlot, "plot(heapOut,type=%co%c,col=%cblue%c,ylim=outRange,ann=FALSE,axes=FALSE);",34, 34, 34, 34);
+    char dequeueTitle[Max*3];
+    sprintf(dequeueTitle, "title(main=%cdequeueing%c,col.man=%cblack%c,font.main=4);title(xlab=%cnumber of objects%c,col.lab=rgb(0,0.5,0));title(ylab=%cnumber of processes%c,col.lab=rgb(0,0.5,0));", 34, 34, 34, 34, 34, 34, 34, 34);
+    char dequeueLines[Max];
+    sprintf(dequeueLines, "lines(queueOut,type%co%c,pch=22,lty=2,col=%cred%c);", 34, 34, 34, 34);
+    char dequeueAxis[Max];
+    sprintf(dequeueAxis, "axis(1,at=1:5,lab=xAxis);axis(2,las=1,at=outRange);");
+    char dequeueLegend[Max];
+    sprintf(dequeueLegend, "legend(1,outRange[2],c(%cheap%c,%cqueue%c),cex=0.8,col=c(%cblue%c,%cred%c),pch21:22,lty1:2);", 34, 34, 34, 34, 34, 34, 34, 34);
+    char dequeueGraph[Max*20*(sizeof(objects)/sizeof(char))];
+    sprintf(dequeueGraph, "%s%s%s%s%sbox()", dequeuePlot, dequeueTitle, dequeueLines, dequeueAxis, dequeueLegend);
+    
+    fprintf(file, "%s\n", dequeueGraph);
+    
     fclose(file);
 }
