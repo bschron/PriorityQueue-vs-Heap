@@ -43,11 +43,11 @@ void export (void)
     //queueOut
     sprintf(queueOut, "queueOut<-c(%lld,%lld,%lld,%lld,%lld);", _individualPriorityQueueDequeueAcess[0], _individualPriorityQueueDequeueAcess[1], _individualPriorityQueueDequeueAcess[2], _individualPriorityQueueDequeueAcess[3], _individualPriorityQueueDequeueAcess[4]);
     //diffIn
-    long long int diff10 = _individualPriorityQueueEnqueueAccess[0] - _individualHpEnqueueAccess[0];
-    long long int diff100 = _individualPriorityQueueEnqueueAccess[1] - _individualHpEnqueueAccess[1];
-    long long int diff1000 = _individualPriorityQueueEnqueueAccess[2] - _individualHpEnqueueAccess[2];
-    long long int diff10000 = _individualPriorityQueueEnqueueAccess[3] - _individualHpEnqueueAccess[3];
-    long long int diff100000 = _individualPriorityQueueEnqueueAccess[4] - _individualHpEnqueueAccess[4];
+    long long int diff10 = _individualPriorityQueueEnqueueAccess[0] - _individualHpEnqueueAccess[0] + _individualHpHeapfyAcess[0];
+    long long int diff100 = _individualPriorityQueueEnqueueAccess[1] - _individualHpEnqueueAccess[1] + _individualHpHeapfyAcess[1];
+    long long int diff1000 = _individualPriorityQueueEnqueueAccess[2] - _individualHpEnqueueAccess[2] + _individualHpHeapfyAcess[2];
+    long long int diff10000 = _individualPriorityQueueEnqueueAccess[3] - _individualHpEnqueueAccess[3] + _individualHpHeapfyAcess[3];
+    long long int diff100000 = _individualPriorityQueueEnqueueAccess[4] - _individualHpEnqueueAccess[4] + _individualHpHeapfyAcess[4];
     sprintf(diffIn, "diffIn<-c(%lld,%lld,%lld,%lld,%lld);", diff10, diff100, diff1000, diff10000, diff100000);
     //diffOut
     diff10 = _individualPriorityQueueDequeueAcess[0] - _individualHpDequeueAcess[0];
@@ -112,6 +112,18 @@ void export (void)
     sprintf(heapfyGraph, "%s%s%s%sbox();", objects, heapfyPlot, heapfyTitle, heapfyAxis);
     
     fprintf(file, "%s\n", heapfyGraph);
+    
+    //diff graph
+    char diffPlot[Max];
+    sprintf(diffPlot, "plot(diffIn,type=%co%c,col=%cblue%c,ylim=diffRange,ann=FALSE,axes=FALSE);",34, 34, 34, 34);
+    char diffTitle[Max*3];
+    sprintf(diffTitle, "title(main=%cheap advantage%c,col.main=%cblack%c,font.main=4);title(xlab=%cnumber of objects%c,col.lab=rgb(0,0.5,0));title(ylab=%cprocesses advantage%c,col.lab=rgb(0,0.5,0));", 34, 34, 34, 34, 34, 34, 34, 34);
+    char diffAxis[Max];
+    sprintf(diffAxis, "axis(1,at=1:5,lab=xAxis);axis(2,las=1,at=diffRange);");
+    char diffGraph[Max*10+(sizeof(objects)/sizeof(char))];
+    sprintf(diffGraph, "%s%s%s%sbox();", objects, diffPlot, diffTitle, diffAxis);
+    
+    fprintf(file, "%s\n", diffGraph);
     
     fclose(file);
 }
