@@ -93,6 +93,7 @@ void hpfyHp (Hp *hp, int parent)
     if (hp->hp[biggestChild] != NULL && hp->priority[parent] < hp->priority[biggestChild] && hp->priority[biggestChild] != -1)
     {
         hpHeapfyAcess++;
+        loadingIcon(&loadingIc);
         
         switchHpItems(hp, parent, biggestChild);
         hpfyHp(hp, biggestChild);
@@ -131,6 +132,7 @@ Hp* enqueueHp (Hp *hp, void *object, int priority)
     if (hp->hpLength < HpSize)
     {
         hpEnqueueAccess++;
+        loadingIcon(&loadingIc);
         
         hp->hp[hp->hpLength] = object;
         hp->priority[hp->hpLength] = priority;

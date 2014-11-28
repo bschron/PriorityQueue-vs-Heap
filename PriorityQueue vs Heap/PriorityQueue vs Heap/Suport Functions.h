@@ -14,5 +14,6 @@
 Data* enlistRandomData (Data* data, int *seed, int dataLength);
 int min (int one, int two);
 int max (int one, int two);
+void loadingIcon (int *state);
 
 #endif /* defined(__PriorityQueue_vs_Heap__Suport_Functions__) */

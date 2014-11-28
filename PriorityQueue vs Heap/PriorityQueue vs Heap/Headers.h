@@ -37,6 +37,8 @@ long long int hpHeapfyAcess, hpEnqueueAccess, hpDequeueAcess;
 long long int priorityQueueEnqueueAccess, priorityQueueDequeueAcess;
 long long int _individualHpHeapfyAcess[5], _individualHpEnqueueAccess[5], _individualHpDequeueAcess[5];
 long long int _individualPriorityQueueEnqueueAccess[5], _individualPriorityQueueDequeueAcess[5];
+int loadingIc;
+int delay;
 
 #include "Heap.h"
 #include "Object Priority Queue.h"

@@ -94,6 +94,7 @@ PQC* insertInRightPosition (PQC *first, PQC* capsule)
     }
     
     priorityQueueEnqueueAccess++;
+    loadingIcon(&loadingIc);
     
     return first;
 }
@@ -119,6 +120,7 @@ void* dequeuePriorityQueue (PriorityQueue *queue)
     free(dequeuedCapsule);
     
     priorityQueueDequeueAcess++;
+    loadingIcon(&loadingIc);
     
     return dequeued;
 }

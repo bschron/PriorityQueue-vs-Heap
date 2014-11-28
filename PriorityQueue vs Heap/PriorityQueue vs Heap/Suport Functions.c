@@ -84,3 +84,48 @@ int min (int one, int two)
     
     return minimum;
 }
+
+void loadingIcon (int *state)
+{
+    char icon = '-';//  - \ | /
+    
+    if (*state > 3)
+    {
+        *state = 0;
+    }
+    
+    delay++;
+    if (delay >= 6666666)
+    {
+        delay = 0;
+    }
+    if (delay != 1)
+    {
+        return;
+    }
+    
+    switch (*state)
+    {
+        case 0:
+            icon = 92;
+            (*state)++;
+            break;
+        case 1:
+            icon = '|';
+            (*state)++;
+            break;
+        case 2:
+            icon = '/';
+            (*state)++;
+            break;
+        case 3:
+            icon = '-';
+            *state = 0;
+            break;
+            
+        default:
+            break;
+    }
+    system("clear");
+    printf("\nLOADING %c\n", icon);
+}
