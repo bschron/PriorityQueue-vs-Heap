@@ -24,7 +24,15 @@ int main(int argc, const char * argv[])
     loadingIc = 0;
     delay = 0;
     
-    for (dataLength = 10, i = 0; dataLength <= 100000 && i<5; dataLength *= 10, hpEnqueueAccess = 0, hpDequeueAcess = 0, priorityQueueEnqueueAccess = 0, priorityQueueDequeueAcess = 0, hpHeapfyAcess = 0, i++)
+    system("clear");
+    
+    for (i = 0; i < 5; i++)
+    {
+        printf("Digite %d/5 caso de enfileiramento:\n", i+1);
+        scanf("%d%*c", cases+i);
+    }
+    
+    for (dataLength = cases[0], i = 0; dataLength <= 100000 && i<5;hpEnqueueAccess = 0, hpDequeueAcess = 0, priorityQueueEnqueueAccess = 0, priorityQueueDequeueAcess = 0, hpHeapfyAcess = 0, i++, dataLength = cases[i])
     {
         loadingIcon(&loadingIc);
         

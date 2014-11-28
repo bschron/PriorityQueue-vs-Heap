@@ -37,7 +37,7 @@ void export (void)
     //heapfy
     sprintf(heapfy, "heapfy<-c(%lld,%lld,%lld,%lld,%lld);", _individualHpHeapfyAcess[0], _individualHpHeapfyAcess[1], _individualHpHeapfyAcess[2], _individualHpHeapfyAcess[3], _individualHpHeapfyAcess[4]);
     //xAxis
-    sprintf(xAxis, "xAxis<-c(10,100,1000,10000,100000);");
+    sprintf(xAxis, "xAxis<-c(%d,%d,%d,%d,%d);", cases[0], cases[1], cases[2], cases[3], cases[4]);
     //queueIn
     sprintf(queueIn, "queueIn<-c(%lld,%lld,%lld,%lld,%lld);", _individualPriorityQueueEnqueueAccess[0], _individualPriorityQueueEnqueueAccess[1], _individualPriorityQueueEnqueueAccess[2], _individualPriorityQueueEnqueueAccess[3], _individualPriorityQueueEnqueueAccess[4]);
     //queueOut
