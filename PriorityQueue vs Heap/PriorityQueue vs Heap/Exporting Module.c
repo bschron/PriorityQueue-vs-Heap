@@ -11,6 +11,8 @@
 void export (void)
 {
     char *home = getenv("HOME");//path to home folder
+    char fileName[] = {"R_functions.R"};
+    char path[] = {"Desktop/"};
     char output[Max];
     char heapIn[Max];
     char heapOut[Max];
@@ -26,7 +28,7 @@ void export (void)
     char heapfyRange[Max];
     char yAxis[Max];
     
-    snprintf(output, sizeof(output)/sizeof(char), "%s/Desktop/R_graphs.txt", home);
+    snprintf(output, sizeof(output)/sizeof(char), "%s/%s%s", home, path, fileName);
     
     FILE *file = fopen(output, "w");
     
@@ -126,4 +128,10 @@ void export (void)
     fprintf(file, "%s\n", diffGraph);
     
     fclose(file);
+    
+    char cd[Max];
+    sprintf(cd, "cd %s/%s", home, path);
+    char RCALL[Max];
+    sprintf(RCALL, "%s;Rscript %s",cd, fileName);
+    system(RCALL);
 }
